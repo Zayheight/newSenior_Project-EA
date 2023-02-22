@@ -104,7 +104,7 @@ app.post("/register",(req,res) => {
   const port_number = req.body.port;
 
 
-  db.query('SELECT * FROM `user` WHERE  OR `email`=?',
+  db.query('SELECT * FROM `user` WHERE   `email`=?',
     [email],
     (err, result) => {
       if(err){
