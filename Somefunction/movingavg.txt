@@ -1,0 +1,20 @@
+if((fastMA2<slowMA2)&&(fastMA1>slowMA1)){
+         if(MovingAverage==0 && !prohibitBuy){
+            OrderSend(Symbol(),OP_BUY,lots,Ask ,3,0,0,"Open_buy",10010,0,clrGreen);
+            buyCount+=1;
+         }
+         else if(MovingAverage==1 && !prohibitSell){
+            OrderSend(Symbol(),OP_SELL,lots,Bid ,3,0,0,"Open_sell",10010,0,clrYellow);
+            sellCount+=1;
+         }
+      }
+      if((fastMA2>slowMA2)&&(fastMA1<slowMA1)){
+         if(MovingAverage==0 &&!prohibitSell ){
+            OrderSend(Symbol(),OP_SELL,lots,Bid ,3,0,0,"Open_sell",10010,0,clrYellow);
+            sellCount+=1;
+         }
+         else if(MovingAverage==1 && !prohibitBuy){
+            OrderSend(Symbol(),OP_BUY,lots,Ask ,3,0,0,"Open_buy",10010,0,clrGreen);
+            buyCount+=1;
+         }
+      }

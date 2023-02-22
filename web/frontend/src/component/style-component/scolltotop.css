@@ -1,0 +1,18 @@
+
+.button-scolltop {
+    position: fixed;
+    /*visibility: hidden;*/
+    border: 2px solid lightgray;
+    bottom: 7vh;
+    right: 5vw;
+    width: 35px;
+    height: 32px;
+    color: lightgray;
+    transition: visibility 1s ease, opacity 1s ease, color 0s;
+  }
+  .button-scolltop :hover {
+    color: black;
+  }
+
+
+  

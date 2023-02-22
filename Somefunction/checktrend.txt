@@ -1,0 +1,42 @@
+void checkTrend(){
+   if(SelectTrend==0){
+      prohibitSell = false;
+      prohibitBuy  = false;
+   }
+   else if(SelectTrend==1){
+      double fastMAI = iMA(NULL,0,MAI_Fast,0,MODE_SMA,PRICE_CLOSE,0);
+      double medMAI = iMA(NULL,0,MAI_Med,0,MODE_SMA,PRICE_CLOSE,0);
+      double slowMAI = iMA(NULL,0,MAI_Slow,0,MODE_SMA,PRICE_CLOSE,0);
+      
+      if((slowMAI>medMAI && slowMAI>fastMAI)&& medMAI>fastMAI){ //can sell
+         prohibitBuy  = true;
+         prohibitSell = false;
+      }
+      else if((fastMAI>medMAI && fastMAI>slowMAI)&&medMAI>slowMAI){ //can buy
+         prohibitSell  = true;
+         prohibitBuy   = false;
+      }
+      else{
+         prohibitSell = true;
+         prohibitBuy  = true;
+      }
+   }
+   else if(SelectTrend==2){
+      double tcci_green1 = iCustom(Symbol(),0,indi_name,0,PeriodsTCCI,0,0,1,1,DeviationTCCI,1,1); 
+      double tcci_red1 = iCustom(Symbol(),0,indi_name,0,PeriodsTCCI,0,0,1,1,DeviationTCCI,2,1); 
+      
+      if(tcci_red1 == EMPTY_VALUE){//can buy -> tcci turn to green line 
+         prohibitSell  = true;
+         prohibitBuy   = false;
+      }
+      else if(tcci_green1 == EMPTY_VALUE){//can sell -> tcci turn to red line
+         prohibitBuy  = true;
+         prohibitSell = false;
+      }
+      else if(tcci_green1!=EMPTY_VALUE &&tcci_red1!=EMPTY_VALUE){
+         prohibitSell = true;
+         prohibitBuy  = true;
+      }
+      //Comment(iCustom(Symbol(),0,indi_name,0,len,0,0,1,1,d,1,1),"test:",iCustom(Symbol(),0,indi_name,0,len,0,0,1,1,d,2,1));
+   }
+}

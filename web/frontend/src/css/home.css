@@ -1,0 +1,279 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&family=Kanit:wght@100;200;300&family=Poppins:wght@100;300&display=swap");
+
+*{
+  font-family: Poppins;
+
+}
+
+body {
+  margin: 0;
+  background-color: #F8F6FA;
+  max-width: 100%;
+
+}
+
+.hidden {
+  display: none;
+}
+
+.landingpage {
+  /* background-image: url(../../public/S__37429261.jpg);
+  background-repeat: no-repeat; */
+  margin: 0 auto;
+  padding: 0 100px;
+  max-width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #F8F6FA;
+}
+
+body.home::before {
+  content: "";
+  position: absolute;
+  width: 123px;
+  height: 123px;
+  left: 60%;
+  top: 400px;
+  filter: blur(140px);
+  background-color: #fb37ff;
+}
+body.home::after {
+  content: "";
+  position: absolute;
+  width: 123px;
+  height: 123px;
+  left: 80%;
+  top: 550px;
+  background-color: #18b2de;
+  filter: blur(80px);
+}
+
+
+
+/* ------------------------- contentbox1 component------------------------- */
+
+.landingpage .box {
+  display: flex;
+  align-items: center;
+  margin-top: 140px;
+  
+}
+
+.box .infobox {
+  animation-name: leftslide;
+  animation-duration: 0.8s;
+  max-height: 500px;
+  max-width: 60%;
+  overflow: hidden;
+  margin-bottom: 120px
+}
+.box .infobox-boldtext {
+  margin: 0;
+  color: #081330;
+  font-size: 55px;
+  font-weight: 600;
+  line-height: 65px;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+.box .infobox-slimtext {
+  margin: 26px 0;
+  font-family: Poppins;
+  color: black;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+.box .infobox-btnwrapper {
+  display: flex;
+}
+
+.btn a{
+    color: black;
+    font-size: 20px;
+    font-family:"Poppins";
+    font-weight: 500;
+
+}
+
+.btn a{
+display: inline-block;
+transition-duration: 0.3s;
+transition-property: transform;
+-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+transform: translateZ(0);
+box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+.btn:hover {
+transform: translateX(20px);
+transition: transform 1s ease-out;
+}
+
+
+
+@keyframes leftslide {
+from {
+  transform: translateX(-700px);
+}
+to {
+  transform: translateX(0px);
+}
+}
+@keyframes rightslide {
+from {
+  transform: translateX(550px);
+}
+to {
+  transform: translateX(0px);
+}
+}
+
+
+
+/* ---------------------------- -Vidio content1 ----------------------------*/
+
+#Vdo1{
+  margin-left: 200px;
+}
+.vdo{
+  background-color: #E9EDF9;
+  margin-left: -200px;
+  margin-right: -200px;
+  padding: 140px 0px 140px 0px;
+}
+
+svg.imgAmico{
+  max-width: 70px;
+}
+
+.contenimg1{
+  max-width: 500px;
+}
+.content1-home .container .row .col-sm{
+  margin-right: 220px;
+  width:530px;
+  height:310px
+}
+.content1-home .container .row .col-sm .infobox-boldtext{
+  margin: 26px 0;
+  color: black;
+  font-size: 35px;
+  font-weight: 600;
+  line-height: 65px;
+  letter-spacing: 0.5px;
+  text-align: left;
+      
+
+}
+
+.content1-home .container .infobox-slimtext {
+  margin: 26px 0;
+  color: black;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+
+
+
+/* ---------------------------button ดูเพิ่มเติม -----------------------*/
+.box .infobox-explorebtn {
+margin-left: 70%;
+border-color: black;
+border-radius: 0.1px;
+justify-content: center;
+align-items: center;
+background-color: white;
+padding: 8px 38px;
+border-radius: 16px;
+font-style: normal;
+font-weight: 600;
+font-size: 13px;
+letter-spacing: -1px;
+color: black;
+}
+
+.box .infobox-explorebtn:hover{
+
+background: linear-gradient(103.91deg, #9b51e0 21.01%, rgba(48, 129, 237, 0.8) 100%);
+border: none;
+transition-delay: 1s;
+
+}
+
+
+/*----------------------  ContenBox2 component--------------------- */
+.landingpage .box2 {
+  display: flex;
+  align-items: center;
+  margin-top: 120px;
+}
+
+.box2 .infobox {
+  max-height: 800px;
+  padding: 0px 200px;
+  text-align: center;
+  overflow: hidden;
+  margin-bottom: 120px
+}
+.box2 .infobox-boldtext {
+  margin: 0;
+  color: #081330;
+  font-size: 35px;
+  font-weight: 600;
+  line-height: 65px;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+.box2 .infobox-slimtext {
+  margin: 26px 0;
+  color: black;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.infobox2 {
+    display: flex;
+    flex-direction: column;
+}
+.infobox2-items{
+  padding: 60px 80px;
+    position: relative;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    justify-content: space-between;
+}
+.infobox2-items .itemwrapper p{
+    width: 100px;
+    margin: 0;
+    margin-top: 10px;
+    text-align: center;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    color: black;
+}
+
+.infobox2-items-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 18px;
+    background-color: red;
+    background: rgba(255, 255, 255, 0.095);
+    box-shadow: inset 2.01px -2.01px 20px rgba(214, 214, 214, 0.17), inset -3.01333px 3.01333px 3.01333px rgba(255, 255, 255, 0.39);
+    backdrop-filter: blur(74.4293px);
+}

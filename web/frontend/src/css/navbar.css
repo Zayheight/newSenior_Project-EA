@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2&family=Kanit:wght@100;200;300&family=Poppins:wght@100;300&display=swap");
+
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+body{
+    margin: 0;
+}
+
+
+header {
+    height: 80px;
+    /* background: rgba(40, 30, 30, 0.2);  */
+    background-color: white;
+    /* backdrop-filter: blur(20px); */
+    padding: 0 100px 0 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    /* box-shadow: 2px 0 20px 0 rgba(0,0,0,0.1); */
+    z-index: 999;
+}
+.navbar ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    list-style: none;
+    column-gap: 25px;
+}
+
+.navbar ul.admin{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    list-style: none;
+    column-gap: 25px;
+}
+
+.navbar li {
+    font-family: "Poppins";
+    font-weight: 500;
+    font-size: 12px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.navbar a{
+    text-decoration: none;
+    color: black;
+}
+
+.navbar a:hover{
+    color: rgb(63, 62, 62);
+    transition-delay: 0.2s;
+} 
+
+
+
+.navbar li .active{
+    background: linear-gradient(93.51deg, #9b51e0 2.84%, #3081ed 99.18%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-bottom: 1.5px solid #9b51e0;
+}
+
+
+  .navlogo,navlogo2  {
+    background: linear-gradient(93.51deg, #9b51e0 2.84%, #3081ed 99.18%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    max-width: 130px;
+  }
+  
+
+.navbar .createbtn {
+    border: 1.5px solid black;
+    border-radius: 10px;
+    padding: 12px;
+}
+.navbar .createbtn:hover{
+    border: 1.5px solid rgb(63, 62, 62);
+    
+}

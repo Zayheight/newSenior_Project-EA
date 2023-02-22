@@ -1,0 +1,54 @@
+
+
+bool checkBuy(){//Can Buy?
+   //return false;
+   if(SelectTrend==0){
+      return true;
+   }else if(SelectTrend==1){//MovingAvgIndicator
+      double fastMAI = iMA(NULL,0,MAI_Fast,0,MODE_SMA,PRICE_CLOSE,0);
+      double medMAI = iMA(NULL,0,MAI_Med,0,MODE_SMA,PRICE_CLOSE,0);
+      double slowMAI = iMA(NULL,0,MAI_Slow,0,MODE_SMA,PRICE_CLOSE,0);
+      if((fastMAI>medMAI && fastMAI>slowMAI)&&medMAI>slowMAI){ //5>10>20
+         return true;
+      }else{
+         return false;
+      }
+   }else if(SelectTrend==2){//TCCI
+      double tcci_green = iCustom(Symbol(),0,indi_name,0,PeriodsTCCI,0,0,1,1,DeviationTCCI,1,1); 
+      double tcci_red = iCustom(Symbol(),0,indi_name,0,PeriodsTCCI,0,0,1,1,DeviationTCCI,2,1);
+      
+      if(tcci_green!=EMPTY_VALUE && tcci_red==EMPTY_VALUE){//Green State
+         return true;
+      }else{
+         return false;
+      }
+   }else{
+      return false;
+   }
+}
+bool checkSell(){//Can Sell?
+   //return false;
+   if(SelectTrend==0){
+      return true;
+   }else if(SelectTrend==1){ //MovingAvgIndicator
+      double fastMAI = iMA(NULL,0,MAI_Fast,0,MODE_SMA,PRICE_CLOSE,0);
+      double medMAI = iMA(NULL,0,MAI_Med,0,MODE_SMA,PRICE_CLOSE,0);
+      double slowMAI = iMA(NULL,0,MAI_Slow,0,MODE_SMA,PRICE_CLOSE,0);
+      if((slowMAI>medMAI && slowMAI>fastMAI)&& medMAI>fastMAI){ //5<10<20
+         return true;
+      }else{
+         return false;
+      }
+   }else if(SelectTrend==2){//TCCI
+      double tcci_green = iCustom(Symbol(),0,indi_name,0,PeriodsTCCI,0,0,1,1,DeviationTCCI,1,1); 
+      double tcci_red = iCustom(Symbol(),0,indi_name,0,PeriodsTCCI,0,0,1,1,DeviationTCCI,2,1);
+      
+      if(tcci_red!=EMPTY_VALUE && tcci_green==EMPTY_VALUE){//Red State
+         return true;
+      }else{
+         return false;
+      }
+   }else{
+      return false;
+   }
+}

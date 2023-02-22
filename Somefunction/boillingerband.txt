@@ -1,0 +1,20 @@
+if(upper1 > Close1 && upper2 < Close2){ //UpperBound
+         if(BollingerBands==0 && !prohibitSell){
+            OrderSend(Symbol(),OP_SELL,lots,Bid ,3,0,0,"Open_sell",10010,0,clrYellow);
+            sellCount+=1;
+         }
+         else if(BollingerBands==1 && !prohibitBuy){
+            OrderSend(Symbol(),OP_BUY,lots,Ask ,3,0,0,"Open_buy",10010,0,clrGreen);
+            buyCount+=1;
+         }
+      }
+ if(lower1 < Close1 && lower2 > Close2){ //LowerBound
+         if(BollingerBands==0 && !prohibitBuy){
+            OrderSend(Symbol(),OP_BUY,lots,Ask ,3,0,0,"Open_buy",10010,0,clrGreen);
+            buyCount+=1;
+         }
+         else if(BollingerBands==1 && !prohibitSell){
+            OrderSend(Symbol(),OP_SELL,lots,Bid ,3,0,0,"Open_sell",10010,0,clrYellow);
+            sellCount+=1;
+         }
+      }

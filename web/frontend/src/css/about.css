@@ -1,0 +1,129 @@
+body.About::before {
+    content: "";
+    position: absolute;
+    width: 123px;
+    height: 123px;
+    left: 80%;
+    top: 330px;
+    filter: blur(140px);
+    background-color: #ff37b9;
+  }
+  body.About::after {
+    content: "";
+    position: absolute;
+    width: 157px;
+    height: 157px;
+    left: 70%;
+    top: 660px;
+    background-color: #EA9271;
+    filter: blur(100px);
+  }
+  
+  
+  
+  /* body::before {
+      content: "";
+      left: 0%;
+      position: absolute;
+      width: 100%;
+      height: 100px;
+      top: 1000px;
+      filter: blur(80px);
+      background: linear-gradient(93.51deg, #9b51e01b 2.84%, #3082ed5b 99.18%);
+  } */
+  
+
+/* ----- about1 component ------- */
+
+  .about1{
+    padding-right: 20%;
+  }
+  
+  .about1 .infobox-boldtext {
+  margin: 0;
+  background: linear-gradient(93.51deg, #635FB6 38.84%, #8BB4F0 90.18%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  font-size: 55px;
+  font-weight: 600;
+  line-height: 65px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  }
+  .about1  .sub-boldtext{
+  margin: 0;
+  color: #081330;
+  font-size: 55px;
+  font-weight: 600;
+  line-height: 65px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  
+  }
+  
+  .about1 .infobox-slimtext {
+  margin: 26px 0;
+  color: black;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  }
+  .about2  .sub-boldtext{
+  margin: 0;
+  color: #081330;
+  font-size: 55px;
+  font-weight: 600;
+  line-height: 65px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  
+  }
+  .about2 .infobox-slimtext{
+  margin: 26px 0;
+  color: black;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  }
+  .about2 .infobox-boldtext {
+  margin: 0;
+  background: linear-gradient(93.51deg, #A67DB4 38.84%, #EA9271 90.18%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  font-size: 55px;
+  font-weight: 600;
+  line-height: 65px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  }
+  
+  .head-text{
+  margin: 26px 0;
+  margin-top: 70px;
+  /* margin-bottom: 160px; */
+  color: #081330;
+  font-size: 55px;
+  font-weight: 600;
+  line-height: 65px;
+  letter-spacing: 0.5px;
+  text-align: left;
+  }
+  
+  section .abouts{
+  margin-top: 180px;
+  }
+  
+  
+  .abouts .container .row .col-sm{
+  margin-top: 30px;
+  margin-right: 20%;
+  padding: 2%;
+  color: black;
+  }
+  
+  
+  

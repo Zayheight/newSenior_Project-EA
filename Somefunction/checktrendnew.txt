@@ -1,0 +1,72 @@
+bool checkTrend(string type){
+   if(type=="Buy"){
+      type_num=1;
+   }else{
+      type_num=2;
+   }
+   double fastMAI = iMA(NULL,0,MAI_Fast,0,MODE_SMA,PRICE_CLOSE,0);
+   double medMAI = iMA(NULL,0,MAI_Med,0,MODE_SMA,PRICE_CLOSE,0);
+   double slowMAI = iMA(NULL,0,MAI_Slow,0,MODE_SMA,PRICE_CLOSE,0);
+   
+   double tcci_green = iCustom(Symbol(),0,indi_name,0,PeriodsTCCI,0,0,1,1,DeviationTCCI,1,1); 
+   double tcci_red = iCustom(Symbol(),0,indi_name,0,PeriodsTCCI,0,0,1,1,DeviationTCCI,2,1);
+      
+   
+   if(MovingAverageIndicator==0&&TCCI==0)return true;
+   if(MovingAverageIndicator==0&&TCCI==1){
+      switch(type_num){
+         case 1:
+            if(tcci_green!=EMPTY_VALUE && tcci_red==EMPTY_VALUE){//Green State
+               return true;
+            }else{
+               return false;
+            }
+            break;
+         case 2:
+            if(tcci_red!=EMPTY_VALUE && tcci_green==EMPTY_VALUE){//Red State
+               return true;
+            }else{
+               return false;
+            }
+            break;
+      }
+   }
+   if(MovingAverageIndicator==1&&TCCI==0){
+      switch(type_num){
+         case 1:
+            if((fastMAI>medMAI && fastMAI>slowMAI)&&medMAI>slowMAI){
+               return true;
+            }else{
+               return false;
+            }
+            break;
+         case 2:
+            if((slowMAI>medMAI && slowMAI>fastMAI)&& medMAI>fastMAI){ //5<10<20
+               return true;
+            }else{
+               return false;
+            }
+            break;
+      }
+   }
+   if(MovingAverageIndicator==1&&TCCI==1){
+      switch(type_num){
+         case 1:
+            if(((fastMAI>medMAI && fastMAI>slowMAI)&&medMAI>slowMAI) && (tcci_green!=EMPTY_VALUE && tcci_red==EMPTY_VALUE)){
+               return true;
+            }else{
+               return false;
+            }
+            break;
+         case 2:
+            if(((slowMAI>medMAI && slowMAI>fastMAI)&& medMAI>fastMAI)&& (tcci_green!=EMPTY_VALUE && tcci_red==EMPTY_VALUE)){ //5<10<20
+               return true;
+            }else{
+               return false;
+            }
+            break;
+      }
+   }
+   
+   return false;
+}
