@@ -8,6 +8,7 @@ import UserHome from './page/UserHome';
 import UserManager from './page/UserManager';
 import Summary from './page/Summary';
 import Dashbord from './page/Dashbord';
+import Transaction_userport from './page/transac_userport';
 import { Routes,Route } from 'react-router-dom';
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
         <Route path="/UserManager" element={<UserManager/>} ></Route>
         <Route path="/Summary" element={<Summary/>} ></Route>
         <Route path="/Dashbord" element={<Dashbord/>} ></Route>
-        <Route path="/Transaction"element={<Transaction/>} ></Route>
+        <Route path="/Dashbord/Userport" element={<Transaction_userport/>} ></Route>
+        <Route path="/Dashbord/Transaction"element={<Transaction/>} ></Route>
 
 
       </Routes> 

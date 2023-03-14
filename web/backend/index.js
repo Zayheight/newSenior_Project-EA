@@ -13,11 +13,20 @@ const db = mysql.createConnection({
   user: "root",
   host: "localhost",
   password: "",
-  database: "eaproject",
+  database: "eaproject2",
 });
 
 app.get("/user", (req, res) => {
-  db.query("SELECT user.user_id, user.user_name, user.email ,user.password ,COUNT (port.user_id) AS sum_port FROM `user` JOIN port ON port.user_id=user.user_id GROUP BY user.user_id", (err, result) => {
+  db.query("SELECT user.user_id, user.user_name, user.email ,user.password,port.user_id ,COUNT (port.user_id) AS sum_port FROM `user` JOIN port ON port.user_id=user.user_id  GROUP BY user.user_id", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+app.get("/transaction_Tabel", (req, res) => {
+  db.query("SELECT * FROM transaction", (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -27,14 +36,24 @@ app.get("/user", (req, res) => {
 });
 
 app.get("/transaction", (req, res) => {
-  db.query(`SELECT user.user_id,user.user_name,transaction.port_number
-  ,transaction.time,transaction.balance,
+  db.query(`SELECT user.user_id,user.user_name,user.email,transaction.port_number
+  ,transaction.time,transaction.balance,transaction.equity,
   transaction.profit
   FROM user
   JOIN port
   ON user.user_id = port.user_id
   JOIN TRANSACTION
   ON TRANSACTION.port_number= port.port_number`, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.get("/port", (req, res) => {
+  db.query(`SELECT * FROM port  `, (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -103,7 +122,6 @@ app.post("/register",(req,res) => {
 
   const port_number = req.body.port;
 
-
   db.query('SELECT * FROM `user` WHERE   `email`=?',
     [email],
     (err, result) => {
@@ -165,8 +183,6 @@ app.post("/register",(req,res) => {
       }
     }
   );
-
-
   
 });
 
@@ -188,6 +204,95 @@ app.post("/signin",(req,res) => {
     }
   );
 });
+app.post("/addport",(req,res) => {
+  const Userid = req.body.Userid;
+  const portnumber = req.body.portnumber;
+
+  db.query('SELECT * FROM `port`  WHERE   `port_number`=?',portnumber,(err, result) => {
+      if(err){
+      console.log(err);
+      }
+      if (result.length==0) {
+        //กรณียังไม่มีport numberนี้
+        db.query('INSERT INTO `port`(user_id,port_number) VALUES (?,?)',[Userid,portnumber],(err, result) => {
+            if(err){
+              console.log(err);
+            }
+            else{
+              console.log(portnumber);
+              res.send({msg:"add port number success"});
+            }
+          }
+        );
+      }
+      else{
+        res.send({msg:"มีแล้ว"});
+        
+      }
+    }
+  );
+  
+});
+
+
+
+app.delete("/deleteport/:id", (req, res) => {
+  const portnum = req.params.id;
+  console.log(portnum);
+  db.query('SELECT `port_number` FROM `transaction` WHERE `port_number`=?',portnum,(err,result)=>{
+    if (err) {
+      console.log(err);
+    } else {
+      if(result.length!=0){
+        db.query('DELETE FROM `transaction` WHERE `port_number`=?',portnum,(err,result)=>{
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        })
+      }else{
+        db.query("DELETE FROM `port` WHERE `port_number`=?",portnum,(err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        }); 
+      }
+    }
+  })
+  //เชค port
+  
+});
+
+app.delete("/deletetran/:id", (req, res) => {
+  const portnum = req.params.id;
+  console.log(portnum);
+  //เชค tran
+  db.query('DELETE FROM `transaction` WHERE `port_number`=?',portnum,(err,result)=>{
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+  
+});
+
+app.delete("/deleteuser/:id", (req, res) => {
+  const userid = req.params.id;
+  console.log(userid);
+  db.query('DELETE FROM `user` WHERE `user_id`=?',userid,(err,result)=>{
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  })
+});
+
+
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

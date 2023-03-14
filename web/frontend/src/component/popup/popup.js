@@ -7,7 +7,7 @@ import Snackbar from '@mui/material/Snackbar';
 
 function popup(props){
     if(props.msg=="successreg"){
-        return (props.trigger) ? (
+        return (props.trigger ) ? (
             <div>
                 <Snackbar open={true} autoHideDuration={6000} onClose={() => props.setTrigger(false)}>
                     <Alert severity="success" onClose={() => props.setTrigger(false)} sx={{ width: '100%' }}>

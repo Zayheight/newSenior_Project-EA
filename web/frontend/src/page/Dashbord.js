@@ -1,33 +1,46 @@
 import "../css/home.css";
 import "../css/dashbord.css";
+import Popupconfirm from "../component/popup/Popconfirmdelete";
 import Sidebar from "../component/admin/sidebar";
 import Navbar from "../component/navbar";
 import Formlogin from "../component/com-singin/formlogin";
 import useToken from "./useToken";
 
-import TextField from "@mui/material/TextField";
-import Fab from "@mui/material/Fab";
-import Stack from "@mui/material/Stack";
-import Autocomplete from "@mui/material/Autocomplete";
-import { Button } from '@mui/material';
+import { AutoComplete, Select, Input } from "antd";
+import { message, Popconfirm } from "antd";
 
-import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import { SearchOutlined } from "@ant-design/icons";
+import { Button, Tooltip, Space } from "antd";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+
 import { Fragment, useEffect } from "react";
 import Axios from "axios";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 
 function Dashbord() {
-
   const { token, setToken } = useToken();
   const [userlist, setuserlist] = useState([""]);
   const [user, setuser] = useState([""]);
   const [emailsearch, setemailsearch] = useState("");
 
+  const [userid, setuserid] = useState();
+  const [port, setport] = useState();
+  const [porttabel, setudataporttabel] = useState([""]);  //  ดึงข้อมูล,เซ็ต
+
+  const [issearch, setbtnsearch] = useState(false);
+
   useEffect(() => {
     Axios.get("http://localhost:3001/user").then((res) => {
       setuserlist(res.data);
-      test();
+      setdatatabel();
+    });
+    Axios.get("http://localhost:3001/port").then((res) => {
+      setudataporttabel(res.data);
     });
   });
 
@@ -40,28 +53,76 @@ function Dashbord() {
     );
   }
 
-  //console.log(newsearch);
-  const handleEnter = (event) => {
-    if (event.key === "Enter") {
-      // Prevent's default 'Enter' behavior.
-      event.defaultMuiPrevented = true;
-      setemailsearch(event.target.value);
-      //console.log(emailsearch);
-    }
-  };
-
-  const newsearch = userlist.filter((obj) => {
+  const filtersearch = userlist.filter((obj) => {
     if (obj.email === emailsearch) {
       return obj.email === emailsearch;
+    } else {
+      return obj.email === false;
     }
   });
-
-  function test() {
-    if (emailsearch === "") {
+  function setdatatabel() {
+    if (emailsearch === "" || issearch === false) {
       setuser(userlist);
-    } else setuser(newsearch);
+    } else setuser(filtersearch);
   }
-  //console.log(newsearch);
+  
+  //findport for delete
+  const filteruserport = porttabel.filter(obj => {
+    return obj.user_id === userid;
+  });
+  //console.log(filteruserport);
+
+  const deletetran = (portnum) => {
+    Axios.delete(`http://localhost:3001/deletetran/${portnum}`).then((response) => {
+      console.log(response);
+    });
+    filteruserport.map((val) => {
+      deleteport(val.port_number);
+     })
+  };
+  const deleteport = (portnum) => {
+    Axios.delete(`http://localhost:3001/deleteport/${portnum}`).then((response) => {
+      console.log(response);
+    });
+    deleteuser(userid);
+  };
+  const deleteuser = (userid) => {
+    Axios.delete(`http://localhost:3001/deleteuser/${userid}`).then((response) => {
+      console.log(response);
+    });
+  };
+  
+  
+
+  //Search
+  const onChange = (e) => {
+    setbtnsearch(true);
+    setemailsearch(e);
+    console.log(`selected ${e}`);
+  };
+  const onSearch = (e) => {
+    console.log("search:", e);
+    setbtnsearch(false);
+  };
+
+  //popupdelete
+  const confirm = (e) => {
+    //console.log(e);
+    filteruserport.map((val) => {
+      deletetran(val.port_number);
+     })
+    message.success("Click on Yes");
+  };
+  const cancel = (e) => {
+    //console.log(e);
+    message.error("Click on No");
+  };
+
+  const setdeleteuser_id =(e)=>{
+    setuserid(e);
+  }
+
+
 
   return (
     <div>
@@ -77,30 +138,28 @@ function Dashbord() {
             <div class="recent-orders">
               <h2> </h2>
 
-              <Stack spacing={1} sx={{ width: 300 }}>
-                <Autocomplete
-                  freeSolo
-                  id="free-solo-2-demo"
-                  size="small"
-                  disableClearable
-                  onKeyDown={handleEnter}
-                  options={userlist.map((option) => option.email)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Search email"
-                      InputProps={{
-                        ...params.InputProps,
-                        type: "search",
-                      }}
-                    />
-                    
-                  )}
-                />
-              </Stack>
-              <Button variant="contained" endIcon={<PersonSearchIcon />  }>ค้นหา</Button>
+              <AutoComplete
+                onChange={onChange}
+                onSearch={onSearch}
+                style={{
+                  width: 300,
+                }}
+                options={userlist.map((val, index) => {
+                  return {
+                    label: val.email,
+                    value: val.email,
+                    key: index,
+                  };
+                })}
+                placeholder="Search email"
+                filterOption={(inputValue, option) =>
+                  option.value
+                    .toUpperCase()
+                    .indexOf(inputValue.toUpperCase()) !== -1
+                }
+              />
 
-              <table className="scroll">
+              <table className="">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -115,24 +174,31 @@ function Dashbord() {
                 <tbody>
                   {user.map((val) => {
                     return (
-                      <tr>
+                      <tr >
                         <td>{val.user_id}</td>
                         <td>{val.user_name}</td>
                         <td>{val.email}</td>
                         <td>{val.password} </td>
                         <td>{val.sum_port} </td>
                         <td>
-                          <Link class="danger" to="/">
-                            EDIT /
-                          </Link>
-                          <Link class="danger" to="/">
-                            {" "}
-                            DEL
-                          </Link>
+                          <Popconfirm
+                            title="Delete?"
+                            style={{}}
+                            description="Are you sure to delete this user?"
+                            onConfirm={confirm}
+                            onCancel={cancel}
+                            okText="Yes"
+                            cancelText="No"
+                          >
+                            <Button onClick={() => {setdeleteuser_id(val.user_id)}} type="link" danger>
+                              Delete 
+                            </Button>
+                          </Popconfirm>
                         </td>
+                        
                         <td>
                           <Link
-                            to="/Transaction"
+                            to="/Dashbord/Userport"
                             class="warning"
                             state={{ id: val.user_id }}
                           >
@@ -147,9 +213,7 @@ function Dashbord() {
             </div>
 
             <div></div>
-
           </main>
-
         </div>
       </div>
     </div>
