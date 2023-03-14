@@ -244,7 +244,7 @@ app.delete("/deleteport/:id", (req, res) => {
       console.log(err);
     } else {
       if(result.length!=0){
-        db.query('DELETE FROM `transaction` WHERE `port_number`=?',portnum,(err,result)=>{
+        db.query('DELETE FROM `transaction` WHERE `port_number`=?)',portnum,(err,result)=>{
           if (err) {
             console.log(err);
           } else {
@@ -252,7 +252,7 @@ app.delete("/deleteport/:id", (req, res) => {
           }
         })
       }else{
-        db.query("DELETE FROM `port` WHERE `port_number`=?",portnum,(err, result) => {
+        db.query("DELETE FROM `port` WHERE `user_id`=(SELECT `user_id` FROM `port` WHERE `port_number`=?)",portnum,(err, result) => {
           if (err) {
             console.log(err);
           } else {
@@ -270,26 +270,55 @@ app.delete("/deletetran/:id", (req, res) => {
   const portnum = req.params.id;
   console.log(portnum);
   //เชค tran
-  db.query('DELETE FROM `transaction` WHERE `port_number`=?',portnum,(err,result)=>{
+  db.query('SELECT port_number FROM transaction WHERE `port_number`=?',portnum,(err,result)=>{
     if (err) {
       console.log(err);
     } else {
-      res.send(result);
+      if(result.length!=0){
+        db.query('DELETE FROM `transaction` WHERE `port_number`=?',portnum,(err,result)=>{
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        });
+      }else{
+        res.send(result);
+      }
     }
-  });
+  })
+  
   
 });
 
 app.delete("/deleteuser/:id", (req, res) => {
   const userid = req.params.id;
   console.log(userid);
-  db.query('DELETE FROM `user` WHERE `user_id`=?',userid,(err,result)=>{
+
+  db.query('SELECT `port_number` FROM `port` WHERE `user_id`=?',userid,(err,result)=>{
     if (err) {
       console.log(err);
     } else {
-      res.send(result);
+      if(result.length!=0){
+        db.query('DELETE FROM `port` WHERE `user_id`=?)',userid,(err,result)=>{
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        })
+      }else{
+        db.query('DELETE FROM `user` WHERE `user_id`=?',userid,(err,result)=>{
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        })
+      }
     }
   })
+  
 });
 
 

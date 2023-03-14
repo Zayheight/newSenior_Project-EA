@@ -73,18 +73,16 @@ function Dashbord() {
   //console.log(filteruserport);
 
   const deletetran = (portnum) => {
+    //console.log(portnum);
+
     Axios.delete(`http://localhost:3001/deletetran/${portnum}`).then((response) => {
       console.log(response);
     });
-    filteruserport.map((val) => {
-      deleteport(val.port_number);
-     })
   };
   const deleteport = (portnum) => {
     Axios.delete(`http://localhost:3001/deleteport/${portnum}`).then((response) => {
       console.log(response);
     });
-    deleteuser(userid);
   };
   const deleteuser = (userid) => {
     Axios.delete(`http://localhost:3001/deleteuser/${userid}`).then((response) => {
@@ -98,10 +96,10 @@ function Dashbord() {
   const onChange = (e) => {
     setbtnsearch(true);
     setemailsearch(e);
-    console.log(`selected ${e}`);
+    console.log(`onChange ${e}`);
   };
   const onSearch = (e) => {
-    console.log("search:", e);
+    console.log("onsearch:", e);
     setbtnsearch(false);
   };
 
@@ -111,6 +109,12 @@ function Dashbord() {
     filteruserport.map((val) => {
       deletetran(val.port_number);
      })
+    filteruserport.map((val) => {
+      deleteport(val.port_number);
+     })
+     
+    deleteuser(userid);
+
     message.success("Click on Yes");
   };
   const cancel = (e) => {
