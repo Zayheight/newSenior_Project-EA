@@ -22,9 +22,10 @@ function Allport() {
   const [userid, setuserid] = useState(location.state.id); //sent from dashbord
   const [fromport, setfromport] = useState("");
   const [open, setOpen] = useState(false);
+
+  const [port, setport_delete] = useState();
+
   
-
-
   useEffect(() => {
     Axios.get("http://localhost:3001/transaction").then((res) => {
       setuserlist(res.data);
@@ -35,18 +36,27 @@ function Allport() {
   });
 
 
-  const user = userlist.filter((obj) => {
-    return obj.user_id === userid;
-  });
-
-
   const Findportuser = userport.filter((obj) => {
     return obj.user_id === userid;
   });
 
+  const deletetran = (port) => {
+    //console.log(portnum);
+    Axios.delete(`http://localhost:3001/deletetran/${port}`).then((response) => {
+      console.log(response);
+    });
+  };
+  const deleteport = (port) => {
+    Axios.delete(`http://localhost:3001/deleteOneport/${port}`).then((response) => {
+      console.log(response);
+    });
+  };
+
 
   const confirm = (e) => {
-    //console.log(e);
+    console.log(port);
+    deletetran(port);
+    deleteport(port);
     message.success("Click on Yes");
   };
   const cancel = (e) => {
@@ -54,7 +64,8 @@ function Allport() {
     message.error("Click on No");
   };
 
-  const setdelete_portnum = (e) => {};
+  const setdelete_portnum = (e) => {
+  };
 
   const onCreate = (values) => {
     setfromport(values.portnumber);
@@ -127,7 +138,7 @@ function Allport() {
                           >
                             <Button
                               onClick={() => {
-                                setdelete_portnum(val.port_number);
+                                setport_delete(val.port_number);
                               }}
                               type="link"
                               danger

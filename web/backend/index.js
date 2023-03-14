@@ -13,7 +13,7 @@ const db = mysql.createConnection({
   user: "root",
   host: "localhost",
   password: "",
-  database: "eaproject2",
+  database: "eaproject",
 });
 
 app.get("/user", (req, res) => {
@@ -322,6 +322,35 @@ app.delete("/deleteuser/:id", (req, res) => {
 });
 
 
+app.delete("/deleteOneport/:id", (req, res) => {
+  const portnum = req.params.id;
+  console.log(portnum);
+  db.query('SELECT `port_number` FROM `transaction` WHERE `port_number`=?',portnum,(err,result)=>{
+    if (err) {
+      console.log(err);
+    } else {
+      if(result.length!=0){
+        db.query('DELETE FROM `transaction` WHERE `port_number`=?',portnum,(err,result)=>{
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        })
+      }else{
+        db.query('DELETE FROM `port` WHERE port_number =?',portnum,(err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        }); 
+      }
+    }
+  })
+  //เชค port
+  
+});
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
